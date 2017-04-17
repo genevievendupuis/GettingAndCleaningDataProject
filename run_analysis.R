@@ -3,23 +3,22 @@
 ## Getting and Cleaning Data 	
 ## Course Project
 
-	library(dplyr)
 
-## Read in training data
-	filepath <- "C:/Coursera/Course3/Week4/Project/UCI HAR Dataset/train"
-	id_train <- read.table( paste0(filepath,"/subject_train.txt"), header = FALSE )
-	x_train <- read.table( paste0(filepath,"/X_train.txt"), header = FALSE )
-	activity_train <- read.table( paste0(filepath,"/Y_train.txt"), header = FALSE )
+library(dplyr)
+## This code assumes working directory contains two folders with raw data - test and train.
+
+## Read in training data (assumes data is in working directory folders)
+	id_train <- read.table( "./train/subject_train.txt", header = FALSE )
+	x_train <- read.table( "./train/X_train.txt", header = FALSE )
+	activity_train <- read.table( "./train/Y_train.txt", header = FALSE )
 
 ## Read in test data
-	filepath <- "C:/Coursera/Course3/Week4/Project/UCI HAR Dataset/test"
-	id_test <- read.table( paste0(filepath,"/subject_test.txt"), header = FALSE )
-	x_test <- read.table( paste0(filepath,"/X_test.txt"), header = FALSE )
-	activity_test <- read.table( paste0(filepath,"/Y_test.txt"), header = FALSE )
+	id_test <- read.table( "./test/subject_test.txt", header = FALSE )
+	x_test <- read.table( "./test/X_test.txt", header = FALSE )
+	activity_test <- read.table( "./test/Y_test.txt", header = FALSE )
 
 ## Read in labels for feature data
-	filepath <- "C:/Coursera/Course3/Week4/Project/UCI HAR Dataset"
-	features <- read.table( paste0(filepath,"/features.txt"), header = FALSE )
+	features <- read.table( "./features.txt", header = FALSE )
 
 ## add labels to variables in all data sets
 ## Note that ID and activity labels must be the same in train/test for merging later
@@ -56,16 +55,14 @@
 	data$activity[data$activity == "6"] <- "laying"
 
 ## extract first data set
-	filepath <- "C:/Coursera/Course3/Week4/Project"
-	write.table(data,paste0(filepath,"/WearableData1_GD.txt"),row.names = FALSE)
+	write.table(data,"./WearableData1_GD.txt",row.names = FALSE)
 
 ## create data set with averages for each subject/activity
 #### REQUIREMENT 5 ####
 	data_summary <- data %>% group_by(ID,activity) %>% summarise_each(funs(mean),3:68)
 
 ## extract second data set
-	filepath <- "C:/Coursera/Course3/Week4/Project"
-	write.table(data,paste0(filepath,"/WearableData2_GD.txt"),row.names = FALSE)
+	write.table(data,"./WearableData2_GD.txt",row.names = FALSE)
 
 
 
